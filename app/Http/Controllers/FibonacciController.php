@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fibonacci;
 use Illuminate\Http\Request;
 
 class FibonacciController extends Controller
@@ -66,6 +67,9 @@ class FibonacciController extends Controller
             $v1 = $v2;
 
             // almacenar v3 en db
+            Fibonacci::create([
+                'valor' => $v3
+            ]);
         }
     }
 }
