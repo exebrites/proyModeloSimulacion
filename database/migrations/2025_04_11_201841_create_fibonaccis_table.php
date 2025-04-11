@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('fibonaccis', function (Blueprint $table) {
             $table->id();
-            $table->float('value');
+            $table->float('valor');
             $table->timestamps();
         });
     }

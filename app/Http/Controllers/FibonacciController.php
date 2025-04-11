@@ -9,6 +9,10 @@ class FibonacciController extends Controller
 {
 
 
+    public function index()
+    {
+        return view('Fibonacci.index');
+    }
     /*
         NÚMEROS PSEUDOALEATORIOS
         MÉTODO DE FIBONACCI
@@ -35,6 +39,19 @@ class FibonacciController extends Controller
         $v2 = $request->input('v2');
         $a = $request->input('a');
         $n = $request->input('n');
+
+        Fibonacci::create([
+            'valor' => $v1
+        ]);
+        Fibonacci::create([
+            'valor' => $v2
+        ]);
+        // return $request;
+        // $v1 = 23;
+        // $v2 = 67;
+        // $a = 177;
+        // $n = 5;
+        // $k = 0;
         //comienzo del bucle
 
 
@@ -48,7 +65,7 @@ class FibonacciController extends Controller
         SI V2 + V1 <= A   ENTONCES k = 0
         SINO k = -1
         */
-            $k = 0;
+
             $aux = $v1 + $v2;
             if ($aux <= $a) {
                 # code...
@@ -58,18 +75,22 @@ class FibonacciController extends Controller
                 $k = -1;
             }
             // V3 = V2 + V1 + k A
-            $v3 = $v2 + $v1 + $k * $a;
+            $v3 = $v2 + $v1 + ($k * $a);
 
             //asignar valores
             //v2=v3
             //v1=v2
-            $v2 = $v3;
-            $v1 = $v2;
 
+            $v1 = $v2;
+            $v2 = $v3;
             // almacenar v3 en db
             Fibonacci::create([
                 'valor' => $v3
             ]);
         }
+        $lastFiveValues = Fibonacci::orderBy('id', 'desc')->take($n + 2)->pluck('valor')->toArray();
+
+        $lastFiveValues = array_reverse($lastFiveValues);
+        return view('Fibonacci.resultado', compact('v1', 'v2', 'a', 'n', 'lastFiveValues'));
     }
 }
