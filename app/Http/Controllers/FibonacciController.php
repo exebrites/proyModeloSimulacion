@@ -34,21 +34,38 @@ class FibonacciController extends Controller
         $v2 = $request->input('v2');
         $a = $request->input('a');
         $n = $request->input('n');
-        
         //comienzo del bucle
-        // definir k 
-        /*
-        SI V2 + V1 <= A   ENTONCES k = 0
-        SINO k = -1
-        */
 
-        //asignar valores
-        //v2=v3
-        //v1=v2
 
         // repetir n veces
 
+        for ($i = 0; $i < $n; $i++) {
+            # code...
 
-        
+            // definir k 
+            /*
+        SI V2 + V1 <= A   ENTONCES k = 0
+        SINO k = -1
+        */
+            $k = 0;
+            $aux = $v1 + $v2;
+            if ($aux <= $a) {
+                # code...
+                $k = 0;
+            } else {
+                # code...
+                $k = -1;
+            }
+            // V3 = V2 + V1 + k A
+            $v3 = $v2 + $v1 + $k * $a;
+
+            //asignar valores
+            //v2=v3
+            //v1=v2
+            $v2 = $v3;
+            $v1 = $v2;
+
+            // almacenar v3 en db
+        }
     }
 }
