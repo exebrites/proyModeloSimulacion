@@ -1,5 +1,8 @@
 # Proyecto de Modelo y Silumacion 
 
+## 2025 Modelos y simulación 
+Grupo 3   =>> Métodos: Fibonacci + Método Mixto de Congruencias
+
 ## Numeros aleatorios
 
 ## Instrucciones de uso 
