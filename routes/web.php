@@ -3,6 +3,7 @@
 use App\Http\Controllers\CongruenciaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FibonacciController;
+use App\Http\Controllers\RachasController;
 
 Route::get('/', function () {
     return view('Home');
@@ -15,3 +16,5 @@ Route::get('/congruencia', [CongruenciaController::class, 'index'])->name('congr
 Route::get('/congruencia/metodo', [CongruenciaController::class, 'metodoCongruencia'])->name('metodoCongruencia');
 //cambiar por POST
 Route::post('/congruencia/mixto', [CongruenciaController::class, 'metodoCongruenciaMixto'])->name('metodoCongruenciaMixto'); 
+
+Route::get('/rachas/{n}',[RachasController::class, 'testTachas'])->name('rachas');
