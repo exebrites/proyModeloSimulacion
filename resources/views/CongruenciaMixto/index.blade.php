@@ -1,61 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Congruencia Mixto | Números Aleatorios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+    body { background-color: whitesmoke; }
+    .error-message { color: #dc3545; font-size: 0.875em; }
+</style>
 <body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow rounded">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3 class="mb-0">Generador Congruencia Mixto</h3>
+                    </div>
+                    <div class="card-body">
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <h5 class="alert-heading">¡Error en los datos ingresados!</h5>
+                                <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
+                        <form action="{{ route('metodoCongruenciaMixto') }}" method="POST">
+                            @csrf
 
-    {{-- @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif --}}
-    <form action="{{ route('metodoCongruenciaMixto') }}" method="POST">
-        @csrf
+                            <div class="mb-3">
+                                <label for="a" class="form-label">Parámetro A</label>
+                                <input type="number" class="form-control @error('a') is-invalid @enderror" 
+                                       id="a" name="a" value="{{ old('a') }}" required>
+                                @error('a')
+                                    <div class="error-message">{{ $message }}</div>
+                                @enderror
+                                <small class="text-muted">Debe ser entero positivo</small>
+                            </div>
 
-        <div class="mb-3">
-            <label for="a" class="form-label">A</label>
-            <input type="number" class="form-control" id="a" name="a" required>
-            @error('a')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+                            <div class="mb-3">
+                                <label for="c" class="form-label">Parámetro C</label>
+                                <input type="number" class="form-control @error('c') is-invalid @enderror" 
+                                       id="c" name="c" value="{{ old('c') }}" required>
+                                @error('c')
+                                    <div class="error-message">{{ $message }}</div>
+                                @enderror
+                                <small class="text-muted">Debe ser entero positivo</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="m" class="form-label">Módulo M</label>
+                                <input type="number" class="form-control @error('m') is-invalid @enderror" 
+                                       id="m" name="m" value="{{ old('m') }}" required>
+                                @error('m')
+                                    <div class="error-message">{{ $message }}</div>
+                                @enderror
+                                <small class="text-muted">Mayor que A y C</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="v1" class="form-label">Semilla (V1)</label>
+                                <input type="number" class="form-control @error('v1') is-invalid @enderror" 
+                                       id="v1" name="v1" value="{{ old('v1') }}" required>
+                                @error('v1')
+                                    <div class="error-message">{{ $message }}</div>
+                                @enderror
+                                <small class="text-muted">Entero positivo menor que M</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="n" class="form-label">Número de iteraciones</label>
+                                <input type="number" class="form-control @error('n') is-invalid @enderror" 
+                                       id="n" name="n" value="{{ old('n', 5) }}" required>
+                                @error('n')
+                                    <div class="error-message">{{ $message }}</div>
+                                @enderror
+                                <small class="text-muted">Entre 1 y 1000 iteraciones</small>
+                            </div>
+
+                            <button type="submit" class="btn btn-success w-100">Generar Secuencia</button>
+                        </form>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                        <h5>Proyecto de Modelo y Simulación</h5>
+                        <a href="{{ route('home') }}" class="btn btn-primary mt-2">Volver al Inicio</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="c" class="form-label">C</label>
-            <input type="number" class="form-control" id="c" name="c" required>
-            @error('c')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="m" class="form-label">M</label>
-            <input type="number" class="form-control" id="m" name="m" required>
-            @error('m')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="n" class="form-label">N</label>
-            <input type="number" class="form-control" id="n" name="n" required>
-            @error('n')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        <div class="mb-3">
-            <label for="v1" class="form-label">V1</label>
-            <input type="number" class="form-control" id="v1" name="v1" required>
-            @error('v1')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <button type="submit" class="btn btn-primary">Generar Secuencia</button>
-    </form>
+    </div>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

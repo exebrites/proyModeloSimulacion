@@ -74,7 +74,7 @@
                     con una distribución uniforme.
                 </p>
                 <div>
-                    <a href="#" class="btn btn-primary btn-lg w-100" style="background-color:cadetblue">Probar Metodo Mixto de Congruencias</a>
+                    <a href="{{ route('congruencia') }}" class="btn btn-primary btn-lg w-100" style="background-color:cadetblue">Probar Metodo Mixto de Congruencias</a>
                 </div>
             </section>
         </div>
