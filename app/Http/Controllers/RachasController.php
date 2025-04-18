@@ -123,6 +123,22 @@ class RachasController extends Controller
         // return $secuenciaBits;
         return $rachasUnos;
     }
+    public function evaluacionRachas($longitudRachas)
+    {
+        $rangosEvaluacionRachas = ['log1' => [2343, 2657], 'log2' => [1135, 1365], 'log3' => [542, 708], 'log4' => [251, 373], 'log5' => [111, 201], 'log6' => [111, 201]];
+        $evaluacionRachas = [];
+        foreach ($longitudRachas as $key => $longitud) {
+            # code...
+            $log1 = ($longitud >= $rangosEvaluacionRachas[$key][0] && $longitud <= $rangosEvaluacionRachas[$key][1]) ? 1 : 0;
+            $log2 = ($longitud >= $rangosEvaluacionRachas[$key][0] && $longitud <= $rangosEvaluacionRachas[$key][1]) ? 1 : 0;
+            $log3 = ($longitud >= $rangosEvaluacionRachas[$key][0] && $longitud <= $rangosEvaluacionRachas[$key][1]) ? 1 : 0;
+            $log4 = ($longitud >= $rangosEvaluacionRachas[$key][0] && $longitud <= $rangosEvaluacionRachas[$key][1]) ? 1 : 0;
+            $log5 = ($longitud >= $rangosEvaluacionRachas[$key][0] && $longitud <= $rangosEvaluacionRachas[$key][1]) ? 1 : 0;
+            $log6 = ($longitud >= $rangosEvaluacionRachas[$key][0] && $longitud <= $rangosEvaluacionRachas[$key][1]) ? 1 : 0;
+            $evaluacionRachas = [$log1, $log2, $log3, $log4, $log5, $log6];
+        }
+        return $evaluacionRachas;
+    }
     public function testTachas($n)
     {
 
@@ -138,9 +154,34 @@ class RachasController extends Controller
 
         //conteo de rachas
         $longitudRachasUnos = $this->contadorLongitudRachas($secuenciaBits, 1, 0); //joya
-        $longitudRachasCeros = $this->contadorLongitudRachas($secuenciaBits, 0, 1);//joya
+        $longitudRachasCeros = $this->contadorLongitudRachas($secuenciaBits, 0, 1); //joya
 
         // evaluar rachas
+        $evaulacionRachasUnos = $this->evaluacionRachas($longitudRachasUnos);
+        $evaulacionRachasCeros = $this->evaluacionRachas($longitudRachasCeros);
+
+        //impresion por pantalla
+        printf("EVALUACION RACHAS UNOS <br>");
+        foreach ($evaulacionRachasUnos as $key => $evaluacion) {
+            # code...
+            if ($evaluacion) {
+
+                printf("log %s: %s\n", $key + 1, "paso la evaluacion");
+            } else {
+                printf("log %s: %s\n", $key + 1, "no paso la evaluacion ");
+            }
+        }
+        printf("<br>");
+        printf("EVALUACION RACHAS CEROS <br>");
+        foreach ($evaulacionRachasCeros as $key => $evaluacion) {
+            # code...
+            if ($evaluacion) {
+
+                printf("log %s: %s\n", $key + 1, "paso la evaluacion");
+            } else {
+                printf("log %s: %s\n", $key + 1, "no paso la evaluacion");
+            }
+        }
         return "rachas";
     }
 }
