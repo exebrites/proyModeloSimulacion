@@ -130,34 +130,34 @@ class CongruenciaController extends Controller
         $sucesores = [$v0, $v1];
 
 
-        //validadciones
-        // El valor de a debe ser entero impar, y no debe ser divisible
-        // por 3 ó 5.
-        if (($a % 2) == 0) {
-            // return redirect()->back()->with('error', 'a deber ser impar');
-            return 'a deber ser impar';
-        }
-        if (($a % 3) == 0) {
-            // return redirect()->back()->with('error', 'a no debe ser divisible por 3');
-            return 'a no debe ser divisible por 3';
-        }
-        if (($a % 5) == 0) {
-            // return redirect()->back()->with('error', 'a no debe ser divisible por 5');
-            return 'a no debe ser divisible por 5';
-        }
+        // //validadciones
+        // // El valor de a debe ser entero impar, y no debe ser divisible
+        // // por 3 ó 5.
+        // if (($a % 2) == 0) {
+        //     // return redirect()->back()->with('error', 'a deber ser impar');
+        //     return 'a deber ser impar';
+        // }
+        // if (($a % 3) == 0) {
+        //     // return redirect()->back()->with('error', 'a no debe ser divisible por 3');
+        //     return 'a no debe ser divisible por 3';
+        // }
+        // if (($a % 5) == 0) {
+        //     // return redirect()->back()->with('error', 'a no debe ser divisible por 5');
+        //     return 'a no debe ser divisible por 5';
+        // }
 
-        //validaciones para c 
-        // dd($c);
-        // El valor de c debe ser entero impar y relativamente primo a m.
-        if (($c % 2) == 0) {
-            # code...
-            // return redirect()->back()->with('error', 'c deber ser impar');
-            return 'c deber ser impar';
-        }
-        if (!$this->sonCoprimos($c, $m)) {
-            // return redirect()->back()->with('error', 'c debe ser coprimo de m');
-            return 'c debe ser coprimo de m';
-        }
+        // //validaciones para c 
+        // // dd($c);
+        // // El valor de c debe ser entero impar y relativamente primo a m.
+        // if (($c % 2) == 0) {
+        //     # code...
+        //     // return redirect()->back()->with('error', 'c deber ser impar');
+        //     return 'c deber ser impar';
+        // }
+        // if (!$this->sonCoprimos($c, $m)) {
+        //     // return redirect()->back()->with('error', 'c debe ser coprimo de m');
+        //     return 'c debe ser coprimo de m';
+        // }
         //metodo 
         for ($i = 1; $i < $n; $i++) {
             # code...
