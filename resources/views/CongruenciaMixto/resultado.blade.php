@@ -35,6 +35,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <?php $n = count($sucesores)?>
+                    <a href="{{route('rachas', $n)}}">Test de Rachas</a>
+                    <a href="{{route('chi', $n)}}">Test de Chi Cuadrado</a>
                     <div class="card-footer text-center">
                         <a href="{{ route('congruencia') }}" class="btn btn-primary">Volver al Generador</a>
                         <a href="{{ route('home') }}" class="btn btn-secondary ms-2">Inicio</a>
