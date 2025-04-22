@@ -50,6 +50,9 @@
                         </tbody>
                     </table>
                 </div>
+                <?php $n = count($lastFiveValues)?>
+                <a href="{{route('rachas', $n)}}">Test de Rachas</a>
+                <a href="http://">Test de Chi Cuadrado</a>
                 <div class="card-footer text-center">
                     <a href="{{ route('fibonacci') }}" class="btn btn-primary">Volver a generar</a>
                 </div>

@@ -141,7 +141,7 @@ class RachasController extends Controller
     }
     public function testTachas($n)
     {
-
+        // return $n;
         // recuperar n ultimos valores generados por x generacion aleatoria
         $fibonacci = Fibonacci::orderBy('created_at', 'desc')->take($n)->get();
         //generacion de la secuencia fibonacci
@@ -157,31 +157,13 @@ class RachasController extends Controller
         $longitudRachasCeros = $this->contadorLongitudRachas($secuenciaBits, 0, 1); //joya
 
         // evaluar rachas
+        //la evaluacion dice si pasa o no las rachas de unos y ceros. Almacena un booleano 
+        //[1=>0] logitud 1 cumple ? 0 falso 
         $evaulacionRachasUnos = $this->evaluacionRachas($longitudRachasUnos);
         $evaulacionRachasCeros = $this->evaluacionRachas($longitudRachasCeros);
 
-        //impresion por pantalla
-        printf("EVALUACION RACHAS UNOS <br>");
-        foreach ($evaulacionRachasUnos as $key => $evaluacion) {
-            # code...
-            if ($evaluacion) {
+        return view('TestRachas.resultado', compact('evaulacionRachasUnos', 'evaulacionRachasCeros'));
 
-                printf("log %s: %s\n", $key + 1, "paso la evaluacion");
-            } else {
-                printf("log %s: %s\n", $key + 1, "no paso la evaluacion ");
-            }
-        }
-        printf("<br>");
-        printf("EVALUACION RACHAS CEROS <br>");
-        foreach ($evaulacionRachasCeros as $key => $evaluacion) {
-            # code...
-            if ($evaluacion) {
-
-                printf("log %s: %s\n", $key + 1, "paso la evaluacion");
-            } else {
-                printf("log %s: %s\n", $key + 1, "no paso la evaluacion");
-            }
-        }
-        return "rachas";
+        
     }
 }
