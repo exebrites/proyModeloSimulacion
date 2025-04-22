@@ -4,7 +4,7 @@ use App\Http\Controllers\CongruenciaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FibonacciController;
 use App\Http\Controllers\RachasController;
-
+use App\Http\Controllers\ChiController;
 Route::get('/', function () {
     return view('Home');
 })->name('home');
@@ -18,3 +18,4 @@ Route::get('/congruencia/metodo', [CongruenciaController::class, 'metodoCongruen
 Route::post('/congruencia/mixto', [CongruenciaController::class, 'metodoCongruenciaMixto'])->name('metodoCongruenciaMixto'); 
 
 Route::get('/rachas/{n}',[RachasController::class, 'testTachas'])->name('rachas');
+Route::get('/chi/{n}',[ChiController::class, 'testChiCuadrado'])->name('chi');

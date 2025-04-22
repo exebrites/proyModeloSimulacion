@@ -137,11 +137,11 @@ class CongruenciaController extends Controller
             // return redirect()->back()->with('error', 'a deber ser impar');
             return 'a deber ser impar';
         }
-        if (($a % 3) == 0) {
+        if (($a / 3) == 0) {
             // return redirect()->back()->with('error', 'a no debe ser divisible por 3');
             return 'a no debe ser divisible por 3';
         }
-        if (($a % 5) == 0) {
+        if (($a / 5) == 0) {
             // return redirect()->back()->with('error', 'a no debe ser divisible por 5');
             return 'a no debe ser divisible por 5';
         }
