@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Fibonacci;
+
 class ChiController extends Controller
 {
     public function index()
@@ -33,7 +34,7 @@ class ChiController extends Controller
     {
         //declaracion de variables
         // cantidad de numeros 
-        $n= 55;
+        // $n= 55;
         $k = 10; //total de numero en el intervalo 0 a 9
         // n / pi
         $npi = $n / $k;
@@ -56,25 +57,15 @@ class ChiController extends Controller
         }
         // $frecuenciaObservada = []
         // dd($frecuenciaObservada);
-        $frecuenciaObservada = [
-            '0'=>7,
-            '1'=>4,
-            '2'=>5,
-            '3'=>7,
-            '4'=>4,
-            '5'=>5,
-            '6'=>4,
-            '7'=>9,
-            '8'=>5,
-            '9'=>5];
-      
+
+
         //calcular chi cuadrado calculado 
         foreach ($frecuenciaObservada as $key => $value) {
             // dd($value);
             $chiCuadradoCalculado += pow(($value - $npi), 2) / $npi;
         }
 
-        dd($chiCuadradoCalculado);
+        // dd($chiCuadradoCalculado);
         // return $frecuenciaObservada;
         if ($chiCuadradoCalculado <= $chiCuadradoCritico) {
             # code...
@@ -84,7 +75,7 @@ class ChiController extends Controller
             return 'rechazar hipotesis nula';
         }
 
-        return $secuenciaFibonacci;
+        // return $secuenciaFibonacci;
         return 'chi cuadrado';
     }
 }
