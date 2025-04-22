@@ -67,15 +67,10 @@ class ChiController extends Controller
 
         // dd($chiCuadradoCalculado);
         // return $frecuenciaObservada;
-        if ($chiCuadradoCalculado <= $chiCuadradoCritico) {
-            # code...
-            return 'aceptar hipotesis nula';
-        } else {
-            # code...
-            return 'rechazar hipotesis nula';
-        }
+        return view('TestChiCuadrado.resultado', compact('chiCuadradoCalculado', 'chiCuadradoCritico'));
+       
 
         // return $secuenciaFibonacci;
-        return 'chi cuadrado';
+        // return 'chi cuadrado';
     }
 }
