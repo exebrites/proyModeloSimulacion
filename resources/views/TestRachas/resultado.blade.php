@@ -1,37 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Resultado del Test Rachas</title>
+    <title>Resultado del Test de Rachas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Resultado del Test de Rachas</h1>
-    {{-- Ver como mostramos --}}
-    {{dd($evaulacionRachasUnos, $evaulacionRachasCeros);}}
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="col-lg-8 col-xl-6 mx-auto">
+            <div class="card shadow rounded-4 overflow-hidden">
+                <div class="card-header bg-success text-white text-center">
+                    <h3 class="mb-0">Resultado del Test de Rachas</h3>
+                </div>
 
-    {{-- printf("EVALUACION RACHAS UNOS <br>");
-    foreach ($evaulacionRachasUnos as $key => $evaluacion) {
-        # code...
-        if ($evaluacion) {
+                <div class="card-body">
+                    {{-- Evaluación de Rachas de Unos --}}
+                    <h5 class="text-center">Evaluación de Rachas de <strong>Unos</strong></h5>
+                    <table class="table table-bordered table-hover text-center mt-3">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Longitud de Racha</th>
+                                <th>Resultado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($evaulacionRachasUnos as $index => $resultado)
+                                <tr>
+                                    <td>Log {{ $index + 1 }}</td>
+                                    <td class="{{ $resultado ? 'text-success' : 'text-danger' }}">
+                                        {{ $resultado ? 'Pasó la evaluación' : 'No pasó la evaluación' }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-            printf("log %s: %s\n", $key + 1, "paso la evaluacion");
-        } else {
-            printf("log %s: %s\n", $key + 1, "no paso la evaluacion ");
-        }
-    }
+                    {{-- Evaluación de Rachas de Ceros --}}
+                    <h5 class="text-center mt-4">Evaluación de Rachas de <strong>Ceros</strong></h5>
+                    <table class="table table-bordered table-hover text-center mt-3">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Longitud de Racha</th>
+                                <th>Resultado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($evaulacionRachasCeros as $index => $resultado)
+                                <tr>
+                                    <td>Log {{ $index + 1 }}</td>
+                                    <td class="{{ $resultado ? 'text-success' : 'text-danger' }}">
+                                        {{ $resultado ? 'Pasó la evaluación' : 'No pasó la evaluación' }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-    printf("<br>");
-    printf("EVALUACION RACHAS CEROS <br>");
-    foreach ($evaulacionRachasCeros as $key => $evaluacion) {
-        # code...
-        if ($evaluacion) {
-
-            printf("log %s: %s\n", $key + 1, "paso la evaluacion");
-        } else {
-            printf("log %s: %s\n", $key + 1, "no paso la evaluacion");
-        }
-    } --}}
+                <div class="card-footer text-center bg-white">
+                    <!-- Volver a 2 url antertior-->
+                    <a href="javascript:history.go(-2)" class="btn btn-outline-primary px-4 rounded-pill">Volver a generar</a>
+                   </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
