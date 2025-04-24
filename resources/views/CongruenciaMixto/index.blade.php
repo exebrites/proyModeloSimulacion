@@ -9,6 +9,7 @@
 <style>
     body { background-color: whitesmoke; }
     .error-message { color: #dc3545; font-size: 0.875em; }
+    .custom-error { color: #dc3545; }
 </style>
 <body>
     <div class="container py-5">
@@ -26,6 +27,11 @@
                                     @foreach($errors->all() as $error)
                                         <li>{{ $error }}</li>
                                     @endforeach
+                                    @if($errors->has('custom'))
+                                        @foreach($errors->get('custom') as $message)
+                                            <li>{{ $message }}</li>
+                                        @endforeach
+                                    @endif
                                 </ul>
                             </div>
                         @endif
@@ -40,9 +46,9 @@
                                 @error('a')
                                     <div class="error-message">{{ $message }}</div>
                                 @enderror
-                                <small class="text-muted">Debe ser entero positivo</small>
+                                <small class="text-muted">Debe ser entero positivo, impar y no divisible por 3 o 5 (ej: 7, 11, 13, 17, 19, 21, etc.)</small>
                             </div>
-
+                            
                             <div class="mb-3">
                                 <label for="c" class="form-label">Parámetro C</label>
                                 <input type="number" class="form-control @error('c') is-invalid @enderror" 
@@ -50,9 +56,9 @@
                                 @error('c')
                                     <div class="error-message">{{ $message }}</div>
                                 @enderror
-                                <small class="text-muted">Debe ser entero positivo</small>
+                                <small class="text-muted">Debe ser entero positivo impar y coprimo con M (ej: si M=1000, C podría ser 7, 11, 13, etc.)</small>
                             </div>
-
+                            
                             <div class="mb-3">
                                 <label for="m" class="form-label">Módulo M</label>
                                 <input type="number" class="form-control @error('m') is-invalid @enderror" 
@@ -60,9 +66,9 @@
                                 @error('m')
                                     <div class="error-message">{{ $message }}</div>
                                 @enderror
-                                <small class="text-muted">Mayor que A y C</small>
+                                <small class="text-muted">Debe ser mayor que A y la semilla V1 (ej: 1000, 1024, etc.)</small>
                             </div>
-
+                            
                             <div class="mb-3">
                                 <label for="v1" class="form-label">Semilla (V1)</label>
                                 <input type="number" class="form-control @error('v1') is-invalid @enderror" 
@@ -70,13 +76,13 @@
                                 @error('v1')
                                     <div class="error-message">{{ $message }}</div>
                                 @enderror
-                                <small class="text-muted">Entero positivo menor que M</small>
+                                <small class="text-muted">Entero positivo menor que M (ej: si M=1000, V1 podría ser 123, 456, etc.)</small>
                             </div>
 
                             <div class="mb-3">
                                 <label for="n" class="form-label">Número de iteraciones</label>
                                 <input type="number" class="form-control @error('n') is-invalid @enderror" 
-                                       id="n" name="n" value="{{ old('n', 5) }}" required>
+                                       id="n" name="n" value="{{ old('n', 5) }}" required min="1" max="1000">
                                 @error('n')
                                     <div class="error-message">{{ $message }}</div>
                                 @enderror
@@ -94,8 +100,6 @@
             </div>
         </div>
     </div>
-
-    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 </body>

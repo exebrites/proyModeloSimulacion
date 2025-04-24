@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Congruencia;
 use App\Models\CongruenciaMixto;
+use Illuminate\Support\Facades\DB;
+
 class CongruenciaController extends Controller
 {
     //
@@ -17,165 +19,166 @@ class CongruenciaController extends Controller
         }
         return $a == 1;
     }
+
     public function index()
     {
         // return "index congruencia";
         return view('CongruenciaMixto.index');
     }
+
     public function metodoCongruencia(Request $request)
     {
-
-        return "congruencia";
-        /*
-        Se basan en Relación Fundamental de Congruencias:
-            V i+1 =(a V i + c V i-k) mod m
-        
-
-            donde Vi , Vi-k , a , c , k , m son enteros no negativos y  arbitrarios 
-
-            que cumplen las sig. condiciones: Vi <> 0, a <> 0, c <> 0, m > Vi , m > a, m > 0.    
-
-        */
-
-
-        /*
-        por el momento m será un valor que se ingresa -> en el segundo hito si es necesario se agrega lo sig. 
-
-            La mayor parte de las versiones para computadora de este
-        método emplean un módulo m=pe, donde
-        
-
-        */
-
-        // VALIDACIONES
-        $datosValidados = $request->validate([
-            'a' => 'required|numeric|min:1',
-            'c' => 'required|numeric|min:1',
-            'm' => 'required|numeric|min:1',
-            'v0' => 'required|numeric|min:1',
-            'v1' => 'required|numeric|min:1',
-            'n' => 'required|numeric|min:1',
-        ]);
-
-        if ($datosValidados['m'] < $datosValidados['v0'] || $datosValidados['m'] < $datosValidados['a']) {
-            return redirect()->back()->with('error', 'El modulo debe ser mayor a la semilla y a');
-        }
-
-
-        // 1. DECLARAR VARIABLES
-        // valores de entrada
-        $a = $datosValidados['a']; //$request->input('a');
-        $c = $datosValidados['c']; //$request->input('c');
-        $m = $datosValidados['m']; //$request->input('m');
-        $v0  = $datosValidados['v0']; //$request->input('v0'); Semilla
-        $n = $datosValidados['n']; //$request->input('i'); Iteraciones
-        $v1 = $datosValidados['v1']; //$request->input('v1');
-        $sucesores = [$v0, $v1];
-        // valores del bucle
-        // 2. VERIFICAR CONDICIONES
-
-        // 3. DEFINIR V i+1 =(a V i + c V i-k) mod m
-        // $v2 = ($a*$v1+$c*$v0)%$m;
-        // 4. REALIZAR LOOP Y ALMACENAR RESULTADO
-        for ($i = 0; $i < $n; $i++) {
-            # code...
-            $v2 = ($a * $v1 + $c * $v0) % $m;
-            $v0 = $v1;
-            $v1 = $v2;
-            $sucesores[] = $v2;
-        }
-        foreach ($sucesores as  $valor) {
-            # code...
-            Congruencia::create([
-                'valor' => $valor
+        try {
+            // VALIDACIONES
+            $datosValidados = $request->validate([
+                'a' => 'required|numeric|min:1',
+                'c' => 'required|numeric|min:1',
+                'm' => 'required|numeric|min:1',
+                'v0' => 'required|numeric|min:1',
+                'v1' => 'required|numeric|min:1',
+                'n' => 'required|numeric|min:1',
             ]);
+
+            if ($datosValidados['m'] < $datosValidados['v0'] || $datosValidados['m'] < $datosValidados['a']) {
+                return redirect()->back()->with('error', 'El modulo debe ser mayor a la semilla y a');
+            }
+
+            // DECLARAR VARIABLES
+            $a = $datosValidados['a'];
+            $c = $datosValidados['c'];
+            $m = $datosValidados['m'];
+            $v0 = $datosValidados['v0'];
+            $v1 = $datosValidados['v1'];
+            $n = $datosValidados['n'];
+            $sucesores = [$v0, $v1];
+
+            // INICIAR TRANSACCIÓN
+            DB::beginTransaction();
+            try {
+                // REALIZAR LOOP Y ALMACENAR RESULTADO
+                for ($i = 0; $i < $n; $i++) {
+                    $v2 = ($a * $v1 + $c * $v0) % $m;
+                    $v0 = $v1;
+                    $v1 = $v2;
+                    $sucesores[] = $v2;
+                }
+
+                // REGISTRO EN BASE DE DATOS
+                foreach ($sucesores as $valor) {
+                    Congruencia::create([
+                        'valor' => $valor
+                    ]);
+                }
+
+                // CONFIRMAR TRANSACCIÓN
+                DB::commit();
+            } catch (\Exception $e) {
+                // REVERTIR TRANSACCIÓN EN CASO DE ERROR
+                DB::rollBack();
+                throw $e;
+            }
+
+            // RETORNO
+            return "resultado congruencia";
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Ocurrió un error: ' . $e->getMessage()], 500);
         }
-        return "resultado congruencia";
     }
 
     public function metodoCongruenciaMixto(Request $request)
     {
-
-      
-        // // VALIDACIONES
-        $datosValidados = $request->validate([
-            'a' => 'required|numeric|min:1',
-            'c' => 'required|numeric|min:1',
-            'm' => 'required|numeric|min:1',
-            // 'v0' => 'required|numeric|min:1',
-            'v1' => 'required|numeric|min:1',
-            'n' => 'required|numeric|min:1',
-        ]);
-
-        if ($datosValidados['m'] < $datosValidados['a']) {
-            // return redirect()->back()->with('error', 'El modulo debe ser mayor a la semilla y a');
-            return 'El modulo debe ser mayor a la semilla y a';
-        }
-
-
-        // 1. DECLARAR VARIABLES
-        // valores de entrada
-        $a = $datosValidados['a']; //$request->input('a');
-        $c = intval($datosValidados['c']); //$request->input('c');
-        $m = $datosValidados['m']; //$request->input('m');
-        // $v0  = $datosValidados['v0']; //$request->input('v0'); Semilla
-        $n = $datosValidados['n']; //$request->input('i'); Iteraciones
-        $v1 = intval($datosValidados['v1']); //$request->input('v1');
-        // $sucesores = [$v0, $v1];
-
-
-
-        $v0  = 1; //$request->input('v0'); Semilla
-
-        $sucesores = [$v0, $v1];
-
-
-        // //validadciones
-        // // El valor de a debe ser entero impar, y no debe ser divisible
-        // // por 3 ó 5.
-        // if (($a % 2) == 0) {
-        //     // return redirect()->back()->with('error', 'a deber ser impar');
-        //     return 'a deber ser impar';
-        // }
-        // if (($a % 3) == 0) {
-        //     // return redirect()->back()->with('error', 'a no debe ser divisible por 3');
-        //     return 'a no debe ser divisible por 3';
-        // }
-        // if (($a % 5) == 0) {
-        //     // return redirect()->back()->with('error', 'a no debe ser divisible por 5');
-        //     return 'a no debe ser divisible por 5';
-        // }
-
-        // //validaciones para c 
-        // // dd($c);
-        // // El valor de c debe ser entero impar y relativamente primo a m.
-        // if (($c % 2) == 0) {
-        //     # code...
-        //     // return redirect()->back()->with('error', 'c deber ser impar');
-        //     return 'c deber ser impar';
-        // }
-        // if (!$this->sonCoprimos($c, $m)) {
-        //     // return redirect()->back()->with('error', 'c debe ser coprimo de m');
-        //     return 'c debe ser coprimo de m';
-        // }
-        //metodo 
-        for ($i = 1; $i < $n; $i++) {
-            # code...
-            $v2 = ($a * $v1 + $c * $v0) % $m;
-            // $v0 = $v1;
-            $v1 = $v2;
-            $sucesores[] = $v2;
-        }
-
-        //registro y retorno
-
-
-        foreach ($sucesores as  $valor) {
-            # code...
-            CongruenciaMixto::create([
-                'valor' => $valor
+        try {
+            // VALIDACIONES BÁSICAS (tipos y rangos)
+            $request->validate([
+                'a' => 'required|integer|min:1',
+                'c' => 'required|integer|min:1',
+                'm' => 'required|integer|min:2', // Mínimo 2 para que pueda ser mayor que a y v1
+                'v1' => 'required|integer|min:1',
+                'n' => 'required|integer|min:1|max:1000',
             ]);
+
+            // Obtener valores validados
+            $a = (int)$request->input('a');
+            $c = (int)$request->input('c');
+            $m = (int)$request->input('m');
+            $v1 = (int)$request->input('v1');
+            $n = (int)$request->input('n');
+
+            // VALIDACIONES ESPECÍFICAS DEL MÉTODO MIXTO
+            $errors = [];
+
+            // 1. Validar que m sea mayor que a y v1
+            if ($m <= $a) {
+                $errors[] = 'El módulo (m) debe ser mayor que el parámetro a';
+            }
+            if ($m <= $v1) {
+                $errors[] = 'El módulo (m) debe ser mayor que la semilla v1';
+            }
+
+            // 2. Validar que a sea impar y no divisible por 3 o 5
+            if ($a % 2 == 0) {
+                $errors[] = 'El parámetro a debe ser impar';
+            }
+            if ($a % 3 == 0) {
+                $errors[] = 'El parámetro a no debe ser divisible por 3';
+            }
+            if ($a % 5 == 0) {
+                $errors[] = 'El parámetro a no debe ser divisible por 5';
+            }
+
+            // 3. Validar que c sea impar
+            if ($c % 2 == 0) {
+                $errors[] = 'El parámetro c debe ser impar';
+            }
+
+            // 4. Validar que c y m sean coprimos (MCD = 1)
+            if (!$this->sonCoprimos($c, $m)) {
+                $errors[] = 'El parámetro c y el módulo m deben ser coprimos (MCD = 1)';
+            }
+
+            // 5. Validar que v1 < m (ya validado parcialmente arriba)
+            if ($v1 >= $m) {
+                $errors[] = 'La semilla v1 debe ser menor que el módulo m';
+            }
+
+            // Si hay errores, redirigir con los mensajes
+            if (!empty($errors)) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['custom' => $errors]);
+            }
+
+            // DECLARAR VARIABLES
+            $sucesores = [$v1];
+
+            // METODO
+            DB::beginTransaction();
+            try {
+                $vi = $v1;
+                for ($i = 1; $i < $n; $i++) {
+                    $vi = ($a * $vi + $c) % $m;
+                    $sucesores[] = $vi;
+                }
+
+                // REGISTRO EN BASE DE DATOS
+                foreach ($sucesores as $valor) {
+                    CongruenciaMixto::create([
+                        'valor' => $valor
+                    ]);
+                }
+
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
+
+            // RETORNO
+            return view('CongruenciaMixto.resultado', compact('sucesores'));
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['custom' => ['Ocurrió un error: ' . $e->getMessage()]]);
         }
-        return view('CongruenciaMixto.resultado',compact('sucesores'));
     }
 }
