@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+    {{-- {{dd($rangosEvaluacionRachas)}} --}}
     <div class="container py-5">
         <div class="col-lg-8 col-xl-6 mx-auto">
             <div class="card shadow rounded-4 overflow-hidden">
@@ -21,13 +22,17 @@
                         <thead class="table-light">
                             <tr>
                                 <th>Longitud de Racha</th>
-                                <th>Resultado</th>
+                                <th>Rancha contada</th>
+                                <th>Rango de prueba</th>
+                                <th>Evaluación</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($evaulacionRachasUnos as $index => $resultado)
                                 <tr>
-                                    <td>Log {{ $index + 1 }}</td>
+                                    <td>Longitud {{ $index + 1 }}</td>
+                                    <td>{{$longitudRachasUnos[$index]}}</td>
+                                    <td>({{$rangosEvaluacionRachas[$index][0]}},{{ $rangosEvaluacionRachas[$index][1]}})</td>
                                     <td class="{{ $resultado ? 'text-success' : 'text-danger' }}">
                                         {{ $resultado ? 'Pasó la evaluación' : 'No pasó la evaluación' }}
                                     </td>
@@ -42,13 +47,18 @@
                         <thead class="table-light">
                             <tr>
                                 <th>Longitud de Racha</th>
-                                <th>Resultado</th>
+                                <th>Rancha contada</th>
+                                <th>Rango de prueba</th>
+                                <th>Evaluación</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($evaulacionRachasCeros as $index => $resultado)
                                 <tr>
-                                    <td>Log {{ $index + 1 }}</td>
+                                    <td>Longitud {{ $index + 1 }}</td>
+                                    <td>{{$longitudRachasCeros[$index]}}</td>
+                                    <td>({{$rangosEvaluacionRachas[$index][0]}},{{ $rangosEvaluacionRachas[$index][1]}})</td>
+
                                     <td class="{{ $resultado ? 'text-success' : 'text-danger' }}">
                                         {{ $resultado ? 'Pasó la evaluación' : 'No pasó la evaluación' }}
                                     </td>

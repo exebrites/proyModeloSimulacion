@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Fibonacci;
+use Illuminate\Database\Console\DumpCommand;
 
 class RachasController extends Controller
 {
@@ -75,6 +76,8 @@ class RachasController extends Controller
 
     public function contadorLongitudRachas($secuenciaBits, $evaluador, $descontinuador)
     {
+        // dump("dentro del contador Longitud");    
+        // dump($secuenciaBits);
 
         // return $descontinuador;
         $rachasUnos = [
@@ -92,7 +95,8 @@ class RachasController extends Controller
             // if($i==$length){
             //     break;
             // }
-            $rachas = $this->contadorRachas($secuenciaBits, $evaluador, $descontinuador, $i);
+            $rachas = $this->contadorRachas($secuenciaBits, $evaluador, $descontinuador, $i); //funciona correctamente
+            // dump($rachas);
             if ($rachas['rachas'] == 1) {
                 # code...
                 $rachasUnos['log1']++;
@@ -121,11 +125,11 @@ class RachasController extends Controller
             // dd($rachas);
         }
         // return $secuenciaBits;
+        // dd($rachasUnos);
         return $rachasUnos;
     }
-    public function evaluacionRachas($longitudRachas)
+    public function evaluacionRachas($rangosEvaluacionRachas, $longitudRachas)
     {
-        $rangosEvaluacionRachas = ['log1' => [2343, 2657], 'log2' => [1135, 1365], 'log3' => [542, 708], 'log4' => [251, 373], 'log5' => [111, 201], 'log6' => [111, 201]];
         $evaluacionRachas = [];
         foreach ($longitudRachas as $key => $longitud) {
             # code...
@@ -139,31 +143,56 @@ class RachasController extends Controller
         }
         return $evaluacionRachas;
     }
+
+    function cambiarClavesPorIndices($array)
+    {
+        $resultado = [];
+        // $indice = 0;
+
+        // Iteramos sobre cada elemento del array
+        foreach ($array as $clave => $valor) {
+            // Asignamos un índice entero como nueva clave
+            $resultado[] = $valor;
+            // $indice++;
+        }
+
+        return $resultado;
+    }
     public function testTachas($n)
     {
         // return $n;
         // recuperar n ultimos valores generados por x generacion aleatoria
         $fibonacci = Fibonacci::orderBy('created_at', 'desc')->take($n)->get();
         //generacion de la secuencia fibonacci
+        // dd(count($fibonacci));
         $secuenciaFibonacci = $this->agrupacionNumerosAleatorios($fibonacci);
-
+        // dd($secuenciaFibonacci);
         //generar secuencia de bits apartir de la secuenciaFibonacci
 
         $secuenciaBits = $this->generacionSecuenciaBits($secuenciaFibonacci);
-
+        // dd($secuenciaBits);
 
         //conteo de rachas
+
         $longitudRachasUnos = $this->contadorLongitudRachas($secuenciaBits, 1, 0); //joya
         $longitudRachasCeros = $this->contadorLongitudRachas($secuenciaBits, 0, 1); //joya
-
+        // redd($longitudRachasCeros);
+        // dd($longitudRachasUnos, $longitudRachasCeros);
         // evaluar rachas
         //la evaluacion dice si pasa o no las rachas de unos y ceros. Almacena un booleano 
         //[1=>0] logitud 1 cumple ? 0 falso 
-        $evaulacionRachasUnos = $this->evaluacionRachas($longitudRachasUnos);
-        $evaulacionRachasCeros = $this->evaluacionRachas($longitudRachasCeros);
+        // dump($longitudRachasUnos);
+        // dump($longitudRachasCeros);
 
-        return view('TestRachas.resultado', compact('evaulacionRachasUnos', 'evaulacionRachasCeros'));
+        //   dd($longitudRachasUnos);
+        $rangosEvaluacionRachas = ['log1' => [2343, 2657], 'log2' => [1135, 1365], 'log3' => [542, 708], 'log4' => [251, 373], 'log5' => [111, 201], 'log6' => [111, 201]];
 
-        
+        $evaulacionRachasUnos = $this->evaluacionRachas($rangosEvaluacionRachas, $longitudRachasUnos);
+        $evaulacionRachasCeros = $this->evaluacionRachas($rangosEvaluacionRachas, $longitudRachasCeros);
+        // dd($evaulacionRachasUnos, $evaulacionRachasCeros);
+        $longitudRachasUnos = $this->cambiarClavesPorIndices($longitudRachasUnos);
+        $longitudRachasCeros = $this->cambiarClavesPorIndices($longitudRachasCeros);
+        $rangosEvaluacionRachas = $this->cambiarClavesPorIndices($rangosEvaluacionRachas);
+        return view('TestRachas.resultado', compact('evaulacionRachasUnos', 'evaulacionRachasCeros', 'longitudRachasUnos', 'longitudRachasCeros', 'secuenciaFibonacci','rangosEvaluacionRachas'));
     }
 }

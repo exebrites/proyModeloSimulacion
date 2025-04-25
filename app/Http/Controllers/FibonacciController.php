@@ -88,7 +88,7 @@ class FibonacciController extends Controller
                 'required',
                 'integer',
                 'min:1',
-                'max:1000',
+                'max:20000',
             ],
         ], $mensajes);
 
