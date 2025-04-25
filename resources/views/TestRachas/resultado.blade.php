@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,17 +9,25 @@
 </head>
 <body class="bg-light">
     {{-- {{dd($rangosEvaluacionRachas)}} --}}
+=======
+@extends('layout.plantilla')
+
+@section('title', 'Resultados del Test de Rachas')
+
+@section('content')
+>>>>>>> f147710d50a9d0783539651830d02820ce049e4d
     <div class="container py-5">
         <div class="col-lg-8 col-xl-6 mx-auto">
             <div class="card shadow rounded-4 overflow-hidden">
+
                 <div class="card-header bg-success text-white text-center">
                     <h3 class="mb-0">Resultado del Test de Rachas</h3>
                 </div>
 
                 <div class="card-body">
                     {{-- Evaluación de Rachas de Unos --}}
-                    <h5 class="text-center">Evaluación de Rachas de <strong>Unos</strong></h5>
-                    <table class="table table-bordered table-hover text-center mt-3">
+                    <h5 class="text-center mb-3">Evaluación de Rachas de <strong>Unos</strong></h5>
+                    <table class="table table-bordered table-hover text-center">
                         <thead class="table-light">
                             <tr>
                                 <th>Longitud de Racha</th>
@@ -42,8 +51,8 @@
                     </table>
 
                     {{-- Evaluación de Rachas de Ceros --}}
-                    <h5 class="text-center mt-4">Evaluación de Rachas de <strong>Ceros</strong></h5>
-                    <table class="table table-bordered table-hover text-center mt-3">
+                    <h5 class="text-center mt-4 mb-3">Evaluación de Rachas de <strong>Ceros</strong></h5>
+                    <table class="table table-bordered table-hover text-center">
                         <thead class="table-light">
                             <tr>
                                 <th>Longitud de Racha</th>
@@ -68,13 +77,13 @@
                     </table>
                 </div>
 
-                <div class="card-footer text-center bg-white">
-                    <!-- Volver a 2 url antertior-->
-                    <a href="javascript:history.go(-2)" class="btn btn-outline-primary px-4 rounded-pill">Volver a generar</a>
-                   </a>
+                <div class="card-footer text-center bg-white border-top-0">
+                    <a href="javascript:history.go(-2)" class="btn btn-outline-primary px-4 rounded-pill me-2">Volver a generar</a>
+                    <a href="{{ route('home') }}" class="btn btn-outline-primary px-4 rounded-pill">
+                        <i class="bi bi-house-fill"></i> Inicio
+                    </a>
                 </div>
             </div>
-        </div>
+        </div>   
     </div>
-</body>
-</html>
+@endsection
