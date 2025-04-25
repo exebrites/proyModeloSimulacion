@@ -44,7 +44,7 @@ class ChiController extends Controller
         $chiCuadradoCritico = 14.6837;
         // valor de chi cuadrado calculado
         $chiCuadradoCalculado = 0;
-
+        $valoresAuxiliares = ['n'=>$n, 'k'=>$k, 'npi'=>$npi, 'gl'=>$gl];
         //frecuencia observada
         $fibonacci = Fibonacci::orderBy('created_at', 'desc')->take($n)->get();
         $secuenciaFibonacci = $this->agrupacionNumerosAleatorios($fibonacci);
@@ -60,14 +60,18 @@ class ChiController extends Controller
 
 
         //calcular chi cuadrado calculado 
+        $chicuadradoFila = [];
         foreach ($frecuenciaObservada as $key => $value) {
             // dd($value);
-            $chiCuadradoCalculado += pow(($value - $npi), 2) / $npi;
+            $aux = pow(($value - $npi), 2) / $npi;
+            $chicuadradoFila[] = $aux;
+            $chiCuadradoCalculado += $aux;
+
         }
 
         // dd($chiCuadradoCalculado);
         // return $frecuenciaObservada;
-        return view('TestChiCuadrado.resultado', compact('chiCuadradoCalculado', 'chiCuadradoCritico'));
+        return view('TestChiCuadrado.resultado', compact('chiCuadradoCalculado', 'chiCuadradoCritico','valoresAuxiliares','frecuenciaObservada','chicuadradoFila'));
        
 
         // return $secuenciaFibonacci;
