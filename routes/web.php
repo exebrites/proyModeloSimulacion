@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FibonacciController;
 use App\Http\Controllers\RachasController;
 use App\Http\Controllers\ChiController;
+use App\Http\Controllers\DistribucionController;
 Route::get('/', function () {
     return view('Home');
 })->name('home');
@@ -19,3 +20,8 @@ Route::post('/congruencia/mixto', [CongruenciaController::class, 'metodoCongruen
 
 Route::get('/rachas/{n}',[RachasController::class, 'testTachas'])->name('rachas');
 Route::get('/chi/{n}',[ChiController::class, 'testChiCuadrado'])->name('chi');
+
+// Distribuciones
+Route::get('/distribuciones', [DistribucionController::class, 'index'])->name('distribuciones');
+Route::get('/distribuciones/multinomial', [DistribucionController::class, 'multinomialIndex'])->name('distribuciones.multinomial.index');
+Route::post('/distribuciones/multinomial/calcular', [DistribucionController::class, 'calcularMultinomial'])->name('distribuciones.multinomial.calcular');
