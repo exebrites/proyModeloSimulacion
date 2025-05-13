@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\MultinomialResult;
 use App\Models\MultinomialCategory;
 use Illuminate\Support\Facades\DB;
-
+use App\Services\StatisticsService;
 class DistribucionController extends Controller
 {
+    protected StatisticsService $stats;
+
+    public function __construct(StatisticsService $stats)
+    {
+        $this->stats = $stats;
+    }
+
+
     // Vista principal de distribuciones
     public function index()
     {
