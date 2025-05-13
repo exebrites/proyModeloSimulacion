@@ -12,13 +12,13 @@ class DistribucionController extends Controller
     // Vista principal de distribuciones
     public function index()
     {
-        return view('distribuciones.index');
+        return view('Distribuciones.index');
     }
 
     // Vista específica para Multinomial (formulario)
     public function multinomialIndex()
     {
-        return view('distribuciones.multinomial.index');
+        return view('Distribuciones.Multinomial.index');
     }
 
     // Calcular distribución multinomial
