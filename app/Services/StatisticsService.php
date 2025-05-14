@@ -4,6 +4,7 @@ namespace App\Services;
 
 use MathPHP\Probability\Distribution\Continuous\Normal;
 use MathPHP\Probability\Distribution\Multivariate\Multinomial;
+use MathPHP\Statistics\Average;
 
 class StatisticsService
 {
@@ -19,6 +20,6 @@ class StatisticsService
         return $dist->pmf($outcomes);
     }
 
+   
     // Podés agregar más métodos aquí según lo necesites
 }
-

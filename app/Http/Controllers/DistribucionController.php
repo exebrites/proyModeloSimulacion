@@ -7,15 +7,18 @@ use App\Models\MultinomialResult;
 use App\Models\MultinomialCategory;
 use Illuminate\Support\Facades\DB;
 use App\Services\StatisticsService;
+use App\Services\DistribucionNormalService;
 
 class DistribucionController extends Controller
 {
     protected StatisticsService $stats;
-
-    public function __construct(StatisticsService $stats)
+    protected DistribucionNormalService $service;
+    public function __construct(StatisticsService $stats, DistribucionNormalService $service)
     {
+        $this->service = $service;
         $this->stats = $stats;
     }
+
 
 
     // Vista principal de distribuciones
@@ -105,8 +108,10 @@ class DistribucionController extends Controller
     {
         $media = $request->input('media');
         $desviacionEstandar = $request->input('desviacion_estandar');
-        // $n = $request->input('n');
-        $resultado =  ['media' => $media, 'desviacionEstandar' => $desviacionEstandar];
-        return $resultado;
+        
+        $tabla = $this->service->generarDistribucion($media, $desviacionEstandar);
+        // return $tabla[0]['valorX'];
+
+        return view('Distribuciones.Normal.resultado', compact('tabla'));
     }
 }
