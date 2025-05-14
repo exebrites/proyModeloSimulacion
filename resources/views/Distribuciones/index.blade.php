@@ -93,7 +93,7 @@
                         Basado en el Teorema del Límite Central.
                     </p>
                     <div class="mb-4">
-                        <a href="#" class="btn btn-primary btn-lg w-100">Probar Normal</a>
+                        <a href="{{ route('distribuciones.normal.index') }}" class="btn btn-primary btn-lg w-100">Probar Normal</a>
                     </div>
                 </section>
             </div>

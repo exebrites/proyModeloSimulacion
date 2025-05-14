@@ -25,3 +25,7 @@ Route::get('/chi/{n}',[ChiController::class, 'testChiCuadrado'])->name('chi');
 Route::get('/distribuciones', [DistribucionController::class, 'index'])->name('distribuciones');
 Route::get('/distribuciones/multinomial', [DistribucionController::class, 'multinomialIndex'])->name('distribuciones.multinomial.index');
 Route::post('/distribuciones/multinomial/calcular', [DistribucionController::class, 'calcularMultinomial'])->name('distribuciones.multinomial.calcular');
+
+// D. Normal
+Route::get('/distribuciones/normal', [DistribucionController::class, 'normalIndex'])->name('distribuciones.normal.index');
+Route::post('/distribuciones/normal/calcular', [DistribucionController::class, 'calcularNormal'])->name('distribuciones.normal.calcular');

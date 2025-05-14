@@ -7,6 +7,7 @@ use App\Models\MultinomialResult;
 use App\Models\MultinomialCategory;
 use Illuminate\Support\Facades\DB;
 use App\Services\StatisticsService;
+
 class DistribucionController extends Controller
 {
     protected StatisticsService $stats;
@@ -90,5 +91,22 @@ class DistribucionController extends Controller
         }
 
         return $muestra;
+    }
+
+
+    // GET /distribucion-normal: muestra el formulario.
+    public function normalIndex()
+    {
+        return view('Distribuciones.Normal.index');
+        return "index normal";
+    }
+    // POST /distribucion-normal: procesa los datos y devuelve los resultados.
+    public function calcularNormal(Request $request)
+    {
+        $media = $request->input('media');
+        $desviacionEstandar = $request->input('desviacion_estandar');
+        // $n = $request->input('n');
+        $resultado =  ['media' => $media, 'desviacionEstandar' => $desviacionEstandar];
+        return $resultado;
     }
 }
