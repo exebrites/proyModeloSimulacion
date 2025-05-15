@@ -29,3 +29,8 @@ Route::post('/distribuciones/multinomial/calcular', [DistribucionController::cla
 // D. Normal
 Route::get('/distribuciones/normal', [DistribucionController::class, 'normalIndex'])->name('distribuciones.normal.index');
 Route::post('/distribuciones/normal/calcular', [DistribucionController::class, 'calcularNormal'])->name('distribuciones.normal.calcular');
+
+
+Route::get('/graficas',function () {
+    return view('Graficas.index');
+})->name('graficas');
