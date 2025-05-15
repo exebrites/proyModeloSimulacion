@@ -9,12 +9,9 @@ class DistribucionNormalService
 
 
     public function __construct(protected StatisticsService $stats) {}
-    public function generarDistribucion(float $media, float $desviacion, int $cantidad = 1000, int $clases = 9)
+    public function generarDistribucion(float $media, float $desviacion, array $valoresX, int $cantidad = 1000, int $clases = 9)
     {
-        // valores por defecto marcas x
-        $valoresX = [2, 4, 6, 8, 10, 12, 14, 16, 18];
-        $media = 10;
-        $desviacion = 2;
+      
         // verificar el paso entre cada marca x
         $paso =  2;
         

@@ -106,12 +106,17 @@ class DistribucionController extends Controller
     // POST /distribucion-normal: procesa los datos y devuelve los resultados.
     public function calcularNormal(Request $request)
     {
+        // Obtiene los valores de los campos dinamicos enviados por el formulario
+        $datos = $request->input('number', []);
+
+        // Obtiene la media y la desviacion estandar del formulario
         $media = $request->input('media');
         $desviacionEstandar = $request->input('desviacion_estandar');
-        
-        $tabla = $this->service->generarDistribucion($media, $desviacionEstandar);
-        // return $tabla[0]['valorX'];
+     
+        // Llama a la funcion generarDistribucion del servicio para generar la tabla de distribucion normal
+        $tabla = $this->service->generarDistribucion($media, $desviacionEstandar, $datos, 1000, 9);
 
+        // Muestra la vista resultado.blade.php con la tabla generada
         return view('Distribuciones.Normal.resultado', compact('tabla'));
     }
 }
