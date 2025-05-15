@@ -29,9 +29,11 @@
             color: #ffffff;
         }
     </style>
+    <h2 class="mb-4">Datos a Ingresar para la Distribución Normal</h2>
+
     <form action="{{ route('distribuciones.normal.calcular') }}" method="POST">
         @csrf
-
+        <h3 class="mb-3">Parametros del conjunto de datos:</h3>
         <div class="mb-3">
             <label for="media" class="form-label">Media (μ)</label>
             <input type="number" class="form-control @error('media') is-invalid @enderror" id="media" name="media"
@@ -50,7 +52,7 @@
                 <div class="error-message">{{ $message }}</div>
             @enderror
         </div>
-
+        <h3 class="mb-3">Ingrese los valores del conjunto de datos:</h3>
         <div id="dynamicForm">
             <div class="mb-3">
                 <label for="number0" class="form-label">Valor 1</label>
@@ -59,9 +61,12 @@
         </div>
         <button type="button" class="btn btn-success" onclick="addField()">Agregar valor</button>
         <button type="button" class="btn btn-danger" onclick="removeField()">Quitar valor</button>
+<br>
+<br>
 
-
-        <button type="submit" class="btn btn-primary">Generar distribución</button>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Generar distribución</button>
+        </div>
     </form>
 
 
