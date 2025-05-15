@@ -18,6 +18,7 @@ class DistribucionNormalService
         // ---------------
         $tabla = [];
         $acumulada = 0;
+        $clase= 1;
         foreach ($valoresX as $key => $x) {
             //calculo los limites inferior y superior de marcas x 
             $limInf = $x - ($paso / 2);
@@ -33,6 +34,7 @@ class DistribucionNormalService
             // calcular la probabilidad acumulada
             $acumulada += $probZ;
             $tabla[] = [
+                'clase' => $clase++,
                 'valorX' => round($x, 4),
                 'limInf' => round($limInf, 4),
                 'limSup' => round($limSup, 4),

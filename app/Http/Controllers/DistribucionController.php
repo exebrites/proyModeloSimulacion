@@ -115,7 +115,7 @@ class DistribucionController extends Controller
      
         // Llama a la funcion generarDistribucion del servicio para generar la tabla de distribucion normal
         $tabla = $this->service->generarDistribucion($media, $desviacionEstandar, $datos, 1000, 9);
-
+// return $tabla;
         // Muestra la vista resultado.blade.php con la tabla generada
         return view('Distribuciones.Normal.resultado', compact('tabla'));
     }
