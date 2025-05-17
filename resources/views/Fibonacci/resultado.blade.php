@@ -3,6 +3,8 @@
 @section('title', 'Resultados de Fibonacci')
 
 @section('content')
+
+{{-- {{dd($semilla,$numeros);}} --}}
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-xl-6">
@@ -12,8 +14,8 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-group mb-4">
-                        <li class="list-group-item"><strong>Valor 1:</strong> {{ $lastFiveValues[0] }}</li>
-                        <li class="list-group-item"><strong>Valor 2:</strong> {{ $lastFiveValues[1] }}</li>
+                        <li class="list-group-item"><strong>Valor 1:</strong> {{ $lastFiveValues[0]->resultado }}</li>
+                        <li class="list-group-item"><strong>Valor 2:</strong> {{ $lastFiveValues[1]->resultado }}</li>
                         <li class="list-group-item"><strong>Parámetro de control (a):</strong> {{ $a }}</li>
                         <li class="list-group-item"><strong>Número de iteraciones (n):</strong> {{ $n }}</li>
                     </ul>
@@ -30,7 +32,7 @@
                             @foreach ($lastFiveValues as $key => $value)
                                 <tr>
                                     <th scope="row">{{ $key + 1 }}</th>
-                                    <td>{{ $value }}</td>
+                                    <td>{{ $value->resultado }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

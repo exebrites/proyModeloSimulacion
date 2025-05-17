@@ -10,8 +10,13 @@ Route::get('/', function () {
     return view('Home');
 })->name('home');
 
-Route::post('/fibonacci/metodo', [FibonacciController::class, 'metodoFibonacci'])->name('metodoFibonacci');
+Route::post('/fibonacci/metodo', [FibonacciController::class, 'metodoFibonacciExtendido'])->name('metodoFibonacci');
+// Route::post('/fibonacci/metodo', [FibonacciController::class, 'metodoFibonacci'])->name('metodoFibonacci');
 Route::get('/fibonacci', [FibonacciController::class, 'index'])->name('fibonacci');
+Route::get('/create', [FibonacciController::class, 'fibonacci'])->name('fibonacci.create');
+Route::get('/fibonacci/{id}',[FibonacciController::class, 'show'])->name('fibonacci.show');
+
+
 
 Route::get('/congruencia', [CongruenciaController::class, 'index'])->name('congruencia');
 Route::get('/congruencia/metodo', [CongruenciaController::class, 'metodoCongruencia'])->name('metodoCongruencia');
