@@ -91,4 +91,8 @@ class DistribucionNormalService
         $probSup = $this->stats->normalCdf($limSup, $media, $desv);
         return $probSup - $probInf;
     }
+
+    public function inversaZ($p,$m,$d){
+        return $this->stats->invNormal($p,$m,$d);
+    }
 }

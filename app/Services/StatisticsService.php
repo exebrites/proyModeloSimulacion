@@ -20,6 +20,15 @@ class StatisticsService
         return $dist->pmf($outcomes);
     }
 
-   
+
     // Podés agregar más métodos aquí según lo necesites
+    public function invNormal($probabilidad, $media = 170, $desviacion = 10)
+    {
+        
+        $normal =  new Normal($media, $desviacion);
+        $z = $normal->inverse($probabilidad);
+
+      
+        return $z;
+    }
 }

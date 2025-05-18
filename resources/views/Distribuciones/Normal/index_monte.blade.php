@@ -31,7 +31,7 @@
     </style>
     <h2 class="mb-4">Datos a Ingresar para la Distribución Normal</h2>
 
-    <form action="{{ route('distribuciones.normal.calcular') }}" method="POST">
+    <form action="{{ route('montecarlo.montecarlo') }}" method="POST">
         @csrf
         <h3 class="mb-3">Parametros del conjunto de datos:</h3>
         <div class="mb-3">
@@ -52,7 +52,7 @@
                 <div class="error-message">{{ $message }}</div>
             @enderror
         </div>
-        <h3 class="mb-3">Ingrese los valores del conjunto de datos:</h3>
+        {{-- <h3 class="mb-3">Ingrese los valores del conjunto de datos:</h3>
         <div id="dynamicForm">
             <div class="mb-3">
                 <label for="number0" class="form-label">Valor 1</label>
@@ -60,12 +60,29 @@
             </div>
         </div>
         <button type="button" class="btn btn-success" onclick="addField()">Agregar valor</button>
-        <button type="button" class="btn btn-danger" onclick="removeField()">Quitar valor</button>
+        <button type="button" class="btn btn-danger" onclick="removeField()">Quitar valor</button> --}}
 
 
+        <div class="mb-3">
+            <label for="marcas" class="form-label">Marca de clases (entre 2 y 9)</label>
+            <input type="number" class="form-control @error('marcas') is-invalid @enderror" id="marcas" name="numero_marcas_clases"
+                value="{{ old('marcas', 4) }}" required min="2" max="9">
+            @error('marcas')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
+        </div>
 
-        <br>
-        <br>
+
+        <div class="mb-3">
+            <label for="porcentaje" class="form-label">Porcentaje</label>
+            <select class="form-select" id="porcentaje" name="porcentaje_valores_extremos" required>
+                <option value="0.68">68%</option>
+                <option value="0.95">95%</option>
+                <option value="0.99.5">99.5%</option>
+            </select>
+        </div>
+<br>
+<br>
 
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Generar distribución</button>
@@ -73,10 +90,10 @@
     </form>
 
 
-    <!--
-                Funciones para agregar y quitar campos dinamicamente para introducir
-                los valores de la distribución normal.
-            -->
+        <!--
+            Funciones para agregar y quitar campos dinamicamente para introducir
+            los valores de la distribución normal.
+        -->
     <script>
         let fieldCount = 1;
 
