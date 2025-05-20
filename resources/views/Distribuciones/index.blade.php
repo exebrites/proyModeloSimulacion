@@ -93,7 +93,13 @@
                         Basado en el Teorema del Límite Central.
                     </p>
                     <div class="mb-4">
-                        <a href="{{ route('distribuciones.normal.index') }}" class="btn btn-primary btn-lg w-100">Probar Normal</a>
+                        <a href="{{ route('distribuciones.normal.index') }}" class="btn btn-primary btn-lg w-100">Probar Normal con datos</a>
+                    
+        
+                    </div>
+
+                    <div class="mb-4">
+                        <a href="{{ route('montecarlo') }}" class="btn btn-primary btn-lg w-100">Probar Normal con generar de numeros</a>
                     </div>
                 </section>
             </div>
