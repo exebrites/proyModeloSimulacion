@@ -195,4 +195,5 @@ class RachasController extends Controller
         $rangosEvaluacionRachas = $this->cambiarClavesPorIndices($rangosEvaluacionRachas);
         return view('TestRachas.resultado', compact('evaulacionRachasUnos', 'evaulacionRachasCeros', 'longitudRachasUnos', 'longitudRachasCeros', 'secuenciaFibonacci','rangosEvaluacionRachas'));
     }
+
 }

@@ -14,6 +14,11 @@ Route::get('/', function () {
   return view('Home');
 })->name('home');
 
+// Ruta para numeros aleatorios
+Route ::get('/numeros-aleatorios', function () {
+  return view('NumerosAleatorios');
+})->name('numerosAleatorios');
+
 Route::post('/fibonacci/metodo', [FibonacciController::class, 'metodoFibonacciExtendido'])->name('metodoFibonacci');
 // Route::post('/fibonacci/metodo', [FibonacciController::class, 'metodoFibonacci'])->name('metodoFibonacci');
 Route::get('/fibonacci', [FibonacciController::class, 'index'])->name('fibonacci');

@@ -77,4 +77,6 @@ class ChiController extends Controller
         // return $secuenciaFibonacci;
         // return 'chi cuadrado';
     }
+
+    
 }

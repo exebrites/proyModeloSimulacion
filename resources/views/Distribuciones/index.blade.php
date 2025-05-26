@@ -32,8 +32,8 @@
     <header class="custom-header py-3 mb-4">
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm">
             <div class="container">
+                <a class="navbar-brand fw-bold text-light" href="{{ route('home') }}">🏠 Inicio</a>
                 <a class="navbar-brand fw-bold text-light" href="{{ route('home') }}">🧮 Números Aleatorios</a>
-                <a class="navbar-brand fw-bold text-light" href="{{ route('distribuciones') }}">📊 Distribuciones</a>
                 <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
