@@ -8,11 +8,14 @@ use App\Models\MultinomialCategory;
 use Illuminate\Support\Facades\DB;
 use App\Services\StatisticsService;
 use App\Services\DistribucionNormalService;
+use InvalidArgumentException;
 
 class DistribucionController extends Controller
 {
     protected StatisticsService $stats;
     protected DistribucionNormalService $service;
+
+
     public function __construct(StatisticsService $stats, DistribucionNormalService $service)
     {
         $this->service = $service;
@@ -27,53 +30,71 @@ class DistribucionController extends Controller
         return view('Distribuciones.index');
     }
 
+    /*
+    
+    PARTE DE LA DISTRIBUCION MULTINOMIAL
+    Esta parte del controlador maneja la distribucion multinomial, mostrando el formulario
+    y procesando los datos enviados por el usuario.
+    
+    */
+
     // Vista específica para Multinomial (formulario)
     public function multinomialIndex()
     {
+
+
         return view('Distribuciones.Multinomial.index');
     }
 
-    // Calcular distribución multinomial
     public function calcularMultinomial(Request $request)
     {
-        // Validar datos de entrada
+        // Validación
         $request->validate([
             'ensayos' => 'required|integer|min:1',
             'categorias' => 'required|array|min:2',
             'probabilidades' => 'required|array|min:2',
             'probabilidades.*' => 'numeric|min:0.01|max:0.99',
+            'frecuencias' => 'required|array|min:2',
+            'frecuencias.*' => 'integer|min:0' // Asegura que sean enteros
         ]);
 
-        // Normalizar probabilidades (suma = 1)
+        // Convertir frecuencias a enteros (doble validación)
+        $frecuencias = array_map('intval', $request->frecuencias);
+        // Normalizar probabilidades
         $probabilidades = $request->probabilidades;
         $suma = array_sum($probabilidades);
-        $probabilidades = array_map(function ($p) use ($suma) {
-            return $p / $suma;
-        }, $probabilidades);
+        $probabilidades = array_map(fn($p) => $p / $suma, $probabilidades);
 
-        // Generar muestra artificial
-        $resultados = $this->generarMultinomial($request->ensayos, $probabilidades);
+        // Validar que la suma de frecuencias coincida con el número de ensayos
+        if (array_sum($request->frecuencias) != $request->ensayos) {
+            return back()->withErrors([
+                'frecuencias' => 'La suma de las frecuencias debe ser igual al número de ensayos'
+            ])->withInput();
+        }
 
-        // Guardar en BD con transacción
-        DB::transaction(function () use ($request, $probabilidades, $resultados) {
-            $resultado = MultinomialResult::create(['ensayos' => $request->ensayos]);
+        try {
+            // Usar las frecuencias ingresadas por el usuario
+            $resultados = $request->frecuencias;
 
-            foreach ($request->categorias as $index => $nombreCategoria) {
-                $categoria = MultinomialCategory::firstOrCreate(['name' => $nombreCategoria]);
+            // Calcular probabilidad exacta para los resultados ingresados
+            $probabilidadExacta = $this->stats->multinomialPmf(
+                $probabilidades,
+                $request->ensayos,
+                $resultados
+            );
 
-                $resultado->categories()->attach($categoria->id, [
-                    'count' => $resultados[$index],
-                    'theoretical_probability' => $probabilidades[$index]
-                ]);
-            }
-        });
-
-        // Pasar los nombres de categorías a la vista
-        return view('distribuciones.multinomial.resultado', [
-            'categorias' => $request->categorias,
-            'probabilidades' => $probabilidades,
-            'resultados' => $resultados
-        ]);
+            return view('Distribuciones.Multinomial.resultado', [
+                'categorias' => $request->categorias,
+                'probabilidades' => $probabilidades,
+                'resultados' => $resultados,
+                'probabilidadExacta' => $probabilidadExacta,
+                'ensayos' => $request->ensayos
+            ]);
+        } catch (InvalidArgumentException $e) {
+            return back()->withErrors([
+                'error' => $e->getMessage()
+            ])->withInput();
+        }
     }
 
     private function generarMultinomial($n, $probabilidades)
@@ -96,6 +117,29 @@ class DistribucionController extends Controller
         return $muestra;
     }
 
+    private function calcularProbabilidadMultinomial($n, $probabilidades, $conteos)
+    {
+        // Calcular el coeficiente multinomial: n! / (x1! * x2! * ... * xk!)
+        $coeficiente = $this->stats->factorial($n);
+        foreach ($conteos as $x) {
+            $coeficiente /= $this->stats->factorial($x);
+        }
+
+        // Calcular el producto de las probabilidades elevadas a los conteos
+        $productoProbabilidades = 1;
+        foreach ($probabilidades as $i => $p) {
+            $productoProbabilidades *= pow($p, $conteos[$i]);
+        }
+
+        return $coeficiente * $productoProbabilidades;
+    }
+
+    /*
+    
+    PARTE DE LA DISTRIBUCION NORMAL
+    Esta parte del controlador maneja la distribucion normal, mostrando el formulario
+
+    */
 
     // GET /distribucion-normal: muestra el formulario.
     public function normalIndex()
@@ -112,10 +156,10 @@ class DistribucionController extends Controller
         // Obtiene la media y la desviacion estandar del formulario
         $media = $request->input('media');
         $desviacionEstandar = $request->input('desviacion_estandar');
-     
+
         // Llama a la funcion generarDistribucion del servicio para generar la tabla de distribucion normal
         $tabla = $this->service->generarDistribucion($media, $desviacionEstandar, $datos, 1000, 9);
-// return $tabla;
+        // return $tabla;
         // Muestra la vista resultado.blade.php con la tabla generada
         return view('Distribuciones.Normal.resultado', compact('tabla'));
     }
