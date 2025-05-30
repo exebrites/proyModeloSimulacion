@@ -70,7 +70,7 @@
                 </div>
                 <div class="card-footer text-muted text-center">
                     <h5>Proyecto de Modelo y Simulación</h5>
-                    <a href="{{ route('home') }}" class="btn btn-primary mt-2">Volver al Inicio</a>
+                    <a href="{{ route('numerosAleatorios') }}" class="btn btn-primary mt-2">Volver al Inicio</a>
                 </div>
             </div>
         </div>

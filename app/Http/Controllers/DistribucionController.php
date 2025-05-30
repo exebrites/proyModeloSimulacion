@@ -69,7 +69,7 @@ class DistribucionController extends Controller
         });
 
         // Pasar los nombres de categorías a la vista
-        return view('distribuciones.multinomial.resultado', [
+        return view('Distribuciones.Multinomial.resultado', [
             'categorias' => $request->categorias,
             'probabilidades' => $probabilidades,
             'resultados' => $resultados

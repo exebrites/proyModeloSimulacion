@@ -29,6 +29,8 @@
             color: #ffffff;
         }
     </style>
+
+    
     <h2 class="mb-4">Datos a Ingresar para la Distribución Normal</h2>
 
     <form action="{{ route('montecarlo.montecarlo') }}" method="POST">

@@ -33,6 +33,8 @@ class MonteCarloController extends Controller
         $marcas = $monte['marcasClases'];
         $semilla = Semilla::where('metodo', 'fibonacci')->find(1);
         $numeros = $semilla->numeros;
+
+        $numeros = $semilla->numeros;
         $muestra = $this->monteCarloService->conversionNumerosZ($numeros, $media, $desviacionEstandar);
         $clasificacion = $this->monteCarloService->clasificarNumeros($muestra, $marcas);
         

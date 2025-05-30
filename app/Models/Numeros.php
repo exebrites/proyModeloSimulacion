@@ -14,4 +14,6 @@ class Numeros extends Model
     {
         return $this->belongsTo(Semilla::class);
     }
+
+    
 }
