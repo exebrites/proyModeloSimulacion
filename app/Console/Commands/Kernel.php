@@ -10,6 +10,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         // Tus comandos personalizados acá
         \App\Console\Commands\EjecutarFibonacciExtendido::class,
+        
+         \App\Console\Commands\EjecutarCongruenciaMixto::class,
     ];
 
     protected function schedule(Schedule $schedule): void

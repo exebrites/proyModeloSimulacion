@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('v1');
             $table->integer('v2');
-            $table->integer('m');
+            $table->bigInteger('m');
             $table->string('metodo');
             $table->timestamps();
         });

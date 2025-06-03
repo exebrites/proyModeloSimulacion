@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('numeros_prueba', function (Blueprint $table) {
             $table->id();
-            $table->integer('resultado');
+            $table->bigInteger('resultado');
 
             $table->foreignId('semilla_prueba_id') // Laravel asume 'semillas_pruebas' y 'id'
                   ->constrained('semillas_pruebas') // Especifica la tabla a la que referencia (opcional si es por convención)
