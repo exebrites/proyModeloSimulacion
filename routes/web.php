@@ -9,6 +9,7 @@ use App\Http\Controllers\DistribucionController;
 use App\Http\Controllers\MonteCarloController;
 use App\Models\Semilla;
 use App\Services\MonteCarloService;
+use App\Http\Controllers\Integrador\IntegradorController;
 
 Route::get('/', function () {
   return view('Home');
@@ -34,6 +35,21 @@ Route::post('/congruencia/mixto', [CongruenciaController::class, 'metodoCongruen
 
 Route::get('/rachas/{n}', [RachasController::class, 'testTachas'])->name('rachas');
 Route::get('/chi/{n}', [ChiController::class, 'testChiCuadrado'])->name('chi');
+
+
+// Integrador - Rutas
+Route::prefix('/integrador')->group(function () {
+    Route::get('/', [IntegradorController::class, 'index'])->name('integrador.index');
+});
+
+// Integrador Stock - Rutas
+Route::prefix('/integrador/stock')->group(function () {
+    Route::get('/', [IntegradorController::class, 'stockIndex'])->name('integrador.stock.index');
+    Route::get('/create', [IntegradorController::class, 'stockCreate'])->name('integrador.stock.create');
+    Route::post('/store', [IntegradorController::class, 'stockStore'])->name('integrador.stock.store');
+});
+
+
 
 // Distribuciones
 Route::get('/distribuciones', [DistribucionController::class, 'index'])->name('distribuciones');

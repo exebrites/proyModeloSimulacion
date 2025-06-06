@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
             $table->float('cantidad')->default(0);
-            $table->date('fecha')->nullable();
+            $table->date('fecha');
             $table->foreignId('demanda_id') // Laravel asume 'demandas' y 'id'
                   ->constrained('demandas'); // Especifica la tabla a la que referencia (opcional si es por convención)
             $table->timestamps();

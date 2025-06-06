@@ -11,6 +11,7 @@ class Movimiento extends Model
     protected $fillable = [
         'venta_id', 
         'pedido_id',
+        'stock_id',
         'tipo',
         'cantidad',
 
@@ -27,4 +28,9 @@ class Movimiento extends Model
         return $this->belongsTo(Pedido::class, 'pedido_id');
     }
 
+    // Relación uno a muchos con el modelo Stock
+    public function stock()
+    {
+        return $this->belongsTo(Stock::class, 'stock_id');
+    }
 }

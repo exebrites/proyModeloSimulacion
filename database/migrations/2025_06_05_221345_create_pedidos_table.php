@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('estado')->default('pendiente'); // pendiente, recibido, cancelado
             $table->integer('demora')->default(0); // en días
             $table->date('fecha_solicitud')->nullable();
-            $table->date('fecha_cubierta')->nullable();
+            $table->date('fecha_recibida')->nullable();
             $table->foreignId('numero_id') // Laravel asume 'numeros' y 'id'
                   ->constrained('numeros'); // Especifica la tabla a la que referencia (opcional si es por convención)
             $table->timestamps();

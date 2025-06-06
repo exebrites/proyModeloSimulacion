@@ -17,7 +17,7 @@ class Pedido extends Model
         'estado',
         'demora',
         'fecha_solicitud',
-        'fecha_recibido',
+        'fecha_recibida',
     ];
     
 

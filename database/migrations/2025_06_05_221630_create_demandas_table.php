@@ -20,7 +20,7 @@ return new class extends Migration
             $table->float('cantidad_solicitada')->default(0);
             $table->float('cantidad_cubierta')->default(0);
             $table->string('estado')->default('pendiente'); // pendiente, satisfecho, cancelado
-            $table->date('fecha')->nullable();
+            $table->date('fecha');
             $table->timestamps();
         });
     }

@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('movimientos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('venta_id') // Laravel asume 'ventas' y 'id'
-                  ->constrained('ventas'); // Especifica la tabla a la que referencia (opcional si es por convención)
-            $table->foreignId('pedido_id') // Laravel asume 'pedidos' y 'id'
-                  ->constrained('pedidos'); // Especifica la tabla a la que referencia (opcional si es por convención)
-            $table->string('tipo'); // tipo de movimiento: 'venta', 'pedido', 'demanda'
+            $table->unsignedBigInteger('venta_id')->nullable();
+            $table->foreign('venta_id')->references('id')->on('ventas');
+            $table->foreignId('stock_id')->constrained('stocks');
+            $table->unsignedBigInteger('pedido_id')->nullable();
+            $table->foreign('pedido_id')->references('id')->on('pedidos');
+            $table->string('tipo');
             $table->float('cantidad')->default(0);
             $table->timestamps();
         });

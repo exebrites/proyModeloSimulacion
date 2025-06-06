@@ -19,5 +19,11 @@ class Stock extends Model
         return $this->hasMany(Demanda::class, 'stock_id');
     }
 
+    // Relación uno a muchos con el modelo Movimiento
+    public function movimientos()
+    {
+        return $this->hasMany(Movimiento::class, 'stock_id');
+    }
+
 
 }
