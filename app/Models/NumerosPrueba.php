@@ -27,4 +27,6 @@ class NumerosPrueba extends Model
     {
         return $this->belongsTo(SemillaPrueba::class, 'semilla_prueba_id');
     }
+
+    
 }
